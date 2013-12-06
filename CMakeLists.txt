@@ -2,6 +2,10 @@ PROJECT(poco)
 
 cmake_minimum_required( VERSION 2.8.11 )
 
+# FIXME: This is a ugly workaround because cmake handles rpath invalidly.
+# See http://public.kitware.com/Bug/view.php?id=13934
+set(CMAKE_SKIP_RPATH 1)
+
 # Append our module directory to CMake
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
