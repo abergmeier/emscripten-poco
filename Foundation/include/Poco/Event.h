@@ -48,6 +48,8 @@
 #include "Poco/Event_WIN32.h"
 #elif defined(POCO_VXWORKS)
 #include "Poco/Event_VX.h"
+#elif defined(EMSCRIPTEN)
+#include "Poco/Event_EM.h"
 #else
 #include "Poco/Event_POSIX.h"
 #endif

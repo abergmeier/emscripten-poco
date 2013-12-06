@@ -41,6 +41,8 @@
 #include "Event_WIN32.cpp"
 #elif defined(POCO_VXWORKS)
 #include "Event_VX.cpp"
+#elif defined(EMSCRIPTEN)
+#include "Event_EM.cpp"
 #else
 #include "Event_POSIX.cpp"
 #endif

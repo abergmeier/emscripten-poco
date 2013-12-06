@@ -45,6 +45,8 @@
 #endif
 #elif defined(POCO_VXWORKS)
 #include "Mutex_VX.cpp"
+#elif defined(EMSCRIPTEN)
+#include "Mutex_EM.cpp"
 #else
 #include "Mutex_POSIX.cpp"
 #endif

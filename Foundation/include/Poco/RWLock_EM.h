@@ -1,11 +1,13 @@
 //
-// RWLock.cpp
+// RWLock_POSIX.h
 //
-// $Id: //poco/1.4/Foundation/src/RWLock.cpp#3 $
+// $Id: //poco/1.4/Foundation/include/Poco/RWLock_EM.h#1 $
 //
 // Library: Foundation
 // Package: Threading
 // Module:  RWLock
+//
+// Definition of the RWLockImpl class for Emscripten "Threads".
 //
 // Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
 // and Contributors.
@@ -34,37 +36,64 @@
 //
 
 
-#include "Poco/RWLock.h"
+#ifndef Foundation_RWLock_EM_INCLUDED
+#define Foundation_RWLock_EM_INCLUDED
 
 
-#if defined(POCO_OS_FAMILY_WINDOWS)
-#if defined(_WIN32_WCE)
-#include "RWLock_WINCE.cpp"
-#else
-#include "RWLock_WIN32.cpp"
-#endif
-#elif defined(POCO_ANDROID)
-#include "RWLock_Android.cpp"
-#elif defined(POCO_VXWORKS)
-#include "RWLock_VX.cpp"
-#elif defined(EMSCRIPTEN)
-#include "RWLock_EM.cpp"
-#else
-#include "RWLock_POSIX.cpp"
-#endif
+#include "Poco/Foundation.h"
+#include "Poco/Exception.h"
+#include <errno.h>
 
 
 namespace Poco {
 
 
-RWLock::RWLock()
+class Foundation_API RWLockImpl
+{
+protected:
+	RWLockImpl();
+	~RWLockImpl();
+	void readLockImpl();
+	bool tryReadLockImpl();
+	void writeLockImpl();
+	bool tryWriteLockImpl();
+	void unlockImpl();
+	
+private:
+};
+
+
+//
+// inlines
+//
+inline void RWLockImpl::readLockImpl()
 {
 }
 
-	
-RWLock::~RWLock()
+
+inline bool RWLockImpl::tryReadLockImpl()
+{
+	return true;
+}
+
+
+inline void RWLockImpl::writeLockImpl()
+{
+}
+
+
+inline bool RWLockImpl::tryWriteLockImpl()
+{
+	return true;
+}
+
+
+inline void RWLockImpl::unlockImpl()
 {
 }
 
 
 } // namespace Poco
+
+
+#endif // Foundation_RWLock_EM_INCLUDED

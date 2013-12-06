@@ -54,6 +54,8 @@
 #include "Poco/RWLock_Android.h"
 #elif defined(POCO_VXWORKS)
 #include "Poco/RWLock_VX.h"
+#elif defined(EMSCRIPTEN)
+#include "Poco/RWLock_EM.h"
 #else
 #include "Poco/RWLock_POSIX.h"
 #endif

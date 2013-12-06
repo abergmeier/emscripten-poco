@@ -1,7 +1,7 @@
 //
-// RWLock.cpp
+// RWLock_EM.cpp
 //
-// $Id: //poco/1.4/Foundation/src/RWLock.cpp#3 $
+// $Id: //poco/1.4/Foundation/src/RWLock_EM.cpp#1 $
 //
 // Library: Foundation
 // Package: Threading
@@ -34,35 +34,18 @@
 //
 
 
-#include "Poco/RWLock.h"
-
-
-#if defined(POCO_OS_FAMILY_WINDOWS)
-#if defined(_WIN32_WCE)
-#include "RWLock_WINCE.cpp"
-#else
-#include "RWLock_WIN32.cpp"
-#endif
-#elif defined(POCO_ANDROID)
-#include "RWLock_Android.cpp"
-#elif defined(POCO_VXWORKS)
-#include "RWLock_VX.cpp"
-#elif defined(EMSCRIPTEN)
-#include "RWLock_EM.cpp"
-#else
-#include "RWLock_POSIX.cpp"
-#endif
+#include "Poco/RWLock_EM.h"
 
 
 namespace Poco {
 
 
-RWLock::RWLock()
+RWLockImpl::RWLockImpl()
 {
 }
 
-	
-RWLock::~RWLock()
+
+RWLockImpl::~RWLockImpl()
 {
 }
 

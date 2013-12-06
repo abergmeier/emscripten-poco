@@ -1,13 +1,13 @@
 //
-// RWLock.cpp
+// Mutex_EM.cpp
 //
-// $Id: //poco/1.4/Foundation/src/RWLock.cpp#3 $
+// $Id: //poco/1.4/Foundation/src/Mutex_EM.cpp#1 $
 //
 // Library: Foundation
 // Package: Threading
-// Module:  RWLock
+// Module:  Mutex
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2008, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -34,35 +34,52 @@
 //
 
 
-#include "Poco/RWLock.h"
-
-
-#if defined(POCO_OS_FAMILY_WINDOWS)
-#if defined(_WIN32_WCE)
-#include "RWLock_WINCE.cpp"
-#else
-#include "RWLock_WIN32.cpp"
+#include "Poco/Mutex_EM.h"
+#include "Poco/Timestamp.h"
+#if !defined(POCO_NO_SYS_SELECT_H)
+#include <sys/select.h>
 #endif
-#elif defined(POCO_ANDROID)
-#include "RWLock_Android.cpp"
-#elif defined(POCO_VXWORKS)
-#include "RWLock_VX.cpp"
-#elif defined(EMSCRIPTEN)
-#include "RWLock_EM.cpp"
-#else
-#include "RWLock_POSIX.cpp"
+#include <unistd.h>
+#include <sys/time.h>
+
+
+#if defined(_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS - 200112L) >= 0L
+#if defined(_POSIX_THREADS) && (_POSIX_THREADS - 200112L) >= 0L
+#define POCO_HAVE_MUTEX_TIMEOUT
+#endif
 #endif
 
 
 namespace Poco {
 
 
-RWLock::RWLock()
+MutexImpl::MutexImpl()
 {
 }
 
-	
-RWLock::~RWLock()
+
+MutexImpl::MutexImpl(bool fast)
+{
+}
+
+
+MutexImpl::~MutexImpl()
+{
+}
+
+
+bool MutexImpl::tryLockImpl(long milliseconds)
+{
+	return true;
+}
+
+
+FastMutexImpl::FastMutexImpl(): MutexImpl(true)
+{
+}
+
+
+FastMutexImpl::~FastMutexImpl()
 {
 }
 
