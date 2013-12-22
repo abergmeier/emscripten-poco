@@ -193,10 +193,15 @@ void PooledThread::release()
 	_mutex.unlock();
 
 	_targetReady.set();
+#if defined(EMSCRIPTEN)
+	delete this;
+	throw NotImplementedException("PooledThread::release not implemented for Emscripten");
+#else
 	if (_thread.tryJoin(JOIN_TIMEOUT))
 	{
 		delete this;
 	}
+#endif
 }
 
 

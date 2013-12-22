@@ -253,7 +253,11 @@ Timer::Timer(Poco::Thread::Priority priority)
 Timer::~Timer()
 {
 	_queue.enqueueNotification(new StopNotification(_queue), 0);
+#if defined(EMSCRIPTEN)
+	throw NotImplementedException("Timer::~Timer not implemented for Emscripten");
+#else
 	_thread.join();
+#endif
 }
 
 	

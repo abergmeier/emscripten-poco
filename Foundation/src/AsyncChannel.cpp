@@ -113,6 +113,9 @@ void AsyncChannel::close()
 {
 	if (_thread.isRunning())
 	{
+#if defined(EMSCRIPTEN)
+		throw NotImplementedException("AsyncChannel::close not implemented for Emscripten");
+#else
 		while (!_queue.empty()) Thread::sleep(100);
 		
 		do 
@@ -120,7 +123,9 @@ void AsyncChannel::close()
 			_queue.wakeUpAll(); 
 		}
 		while (!_thread.tryJoin(100));
+#endif
 	}
+
 }
 
 

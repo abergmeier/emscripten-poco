@@ -126,7 +126,11 @@ void ActiveDispatcher::stop()
 	_queue.clear();
 	_queue.wakeUpAll();
 	_queue.enqueueNotification(new StopNotification);
+#if defined(EMSCRIPTEN)
+	throw NotImplementedException("ActiveDispatcher::stop not implemented for Emscripten");
+#else
 	_thread.join();
+#endif
 }
 
 

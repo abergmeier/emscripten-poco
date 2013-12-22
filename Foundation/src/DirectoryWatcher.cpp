@@ -605,7 +605,11 @@ void DirectoryWatcher::run()
 void DirectoryWatcher::stop()
 {
 	_pStrategy->stop();
+#if defined(EMSCRIPTEN)
+	throw NotImplementedException("DirectoryWatcher::stop not implemented for Emscripten");
+#else
 	_thread.join();
+#endif
 }
 
 

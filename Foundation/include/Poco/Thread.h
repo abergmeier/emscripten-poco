@@ -167,7 +167,7 @@ public:
 
 	void start(Callable target, void* pData = 0);
 		/// Starts the thread with the given target and parameter.
-
+#if !defined(EMSCRIPTEN)
 	void join();
 		/// Waits until the thread completes execution.	
 		/// If multiple threads try to join the same
@@ -182,7 +182,7 @@ public:
 		/// Waits for at most the given interval for the thread
 		/// to complete. Returns true if the thread has finished,
 		/// false otherwise.
-
+#endif
 	bool isRunning() const;
 		/// Returns true if the thread is running.
 
