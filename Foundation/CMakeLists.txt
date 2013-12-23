@@ -5,6 +5,19 @@ set( SYNC_SRCS
   src/Thread.cpp
 )
 
+set( ZLIB_SRCS
+  src/adler32.c
+  src/compress.c
+  src/crc32.c
+  src/deflate.c
+  src/infback.c
+  src/inffast.c
+  src/inflate.c
+  src/inftrees.c
+  src/trees.c
+  src/zutil.c
+)
+
 set( BASE_SRCS 
   src/ASCIIEncoding.cpp
   src/Ascii.cpp
@@ -140,14 +153,6 @@ set( BASE_SRCS
   src/UnicodeConverter.cpp
   src/Void.cpp
   src/Windows1252Encoding.cpp
-  src/adler32.c
-  src/compress.c
-  src/crc32.c
-  src/deflate.c
-  src/infback.c
-  src/inffast.c
-  src/inflate.c
-  src/inftrees.c
   src/pcre_chartables.c
   src/pcre_compile.c
   src/pcre_exec.c
@@ -163,8 +168,6 @@ set( BASE_SRCS
   src/pcre_valid_utf8.c
   src/pcre_xclass.c
   src/pocomsg.mc
-  src/trees.c
-  src/zutil.c
 )
 
 set(LIN_SRCS
@@ -172,14 +175,14 @@ set(LIN_SRCS
 )
 
 if(CMAKE_SYSTEM MATCHES "Windows")
- set(SRCS ${BASE_SRCS} ${WIN_SRCS} ${SYNC_SRCS})
+ set(SRCS ${BASE_SRCS} ${WIN_SRCS} ${SYNC_SRCS} ${ZLIB_SRCS})
  add_definitions( -DPCRE_STATIC -DFoundation_EXPORTS)
  set(SYSLIBS ${SYSLIBS} iphlpapi)
 elseif(EMSCRIPTEN)
  set(SRCS ${BASE_SRCS})
  add_definitions( -DPCRE_STATIC)
 else (CMAKE_SYSTEM MATCHES "Windows")
- set(SRCS ${BASE_SRCS} ${LIN_SRCS} ${SYNC_SRCS})
+ set(SRCS ${BASE_SRCS} ${LIN_SRCS} ${SYNC_SRCS} ${ZLIB_SRCS})
  add_definitions( -DPCRE_STATIC)
 endif(CMAKE_SYSTEM MATCHES "Windows")
 
