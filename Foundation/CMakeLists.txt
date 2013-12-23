@@ -1,5 +1,10 @@
 set(LIBNAME "PocoFoundation")
 
+set( SYNC_SRCS
+  src/Semaphore.cpp
+  src/Thread.cpp
+)
+
 set( BASE_SRCS 
   src/ASCIIEncoding.cpp
   src/Ascii.cpp
@@ -93,7 +98,6 @@ set( BASE_SRCS
   src/RotateStrategy.cpp
   src/Runnable.cpp
   src/SHA1Engine.cpp
-  src/Semaphore.cpp
   src/SharedLibrary.cpp
   src/SharedMemory.cpp
   src/SignalHandler.cpp
@@ -116,7 +120,6 @@ set( BASE_SRCS
   src/TextEncoding.cpp
   src/TextIterator.cpp
   src/TextBufferIterator.cpp
-  src/Thread.cpp
   src/ThreadTarget.cpp
   src/ThreadLocal.cpp
   src/ThreadPool.cpp
@@ -169,11 +172,14 @@ set(LIN_SRCS
 )
 
 if(CMAKE_SYSTEM MATCHES "Windows")
- set(SRCS ${BASE_SRCS} ${WIN_SRCS})
+ set(SRCS ${BASE_SRCS} ${WIN_SRCS} ${SYNC_SRCS})
  add_definitions( -DPCRE_STATIC -DFoundation_EXPORTS)
  set(SYSLIBS ${SYSLIBS} iphlpapi)
+elseif(EMSCRIPTEN)
+ set(SRCS ${BASE_SRCS})
+ add_definitions( -DPCRE_STATIC)
 else (CMAKE_SYSTEM MATCHES "Windows")
- set(SRCS ${BASE_SRCS} ${LIN_SRCS})
+ set(SRCS ${BASE_SRCS} ${LIN_SRCS} ${SYNC_SRCS})
  add_definitions( -DPCRE_STATIC)
 endif(CMAKE_SYSTEM MATCHES "Windows")
 
